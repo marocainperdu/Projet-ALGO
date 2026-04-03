@@ -352,14 +352,11 @@ public class Polynome {
     }
 
     static Polynome fois(Polynome a, Polynome b) {
-        Polynome res = new Polynome();
-        Monome pa = a.tete;
-        while (pa != null) {
-            Polynome tmp = foisMonome(b, pa.coef, pa.expo);
-            res = plus(res, tmp);
-            pa = pa.suiv;
-        }
-        return res;
+        if (a.tete == null) return new Polynome();
+        Polynome premierFoisB = foisMonome(b, a.tete.coef, a.tete.expo);
+        Polynome resteDeA = new Polynome();
+        resteDeA.tete = a.tete.suiv;
+        return plus(premierFoisB, fois(resteDeA, b));
     }
 
     // retourne {quotient, reste}
